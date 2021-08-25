@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h1>{{ titulo }}</h1>
+  <div class="corpo">
+    <h1 class="centralizado">{{ titulo }}</h1>
 
-    <ul>
-      <li v-for="foto of fotos">
+    <ul class="lista-fotos">
+      <li class="lista-fotos-item" v-for="foto of fotos">
          <img :src="foto.url" :alt="foto.titulo" />
       </li>
     </ul>
@@ -17,20 +17,34 @@ export default {
   data(){
     return {
       titulo: 'Alurapic',
-      fotos: [
-        {
-          url: 'https://boasnovasmg.com.br/wp-content/uploads/2018/08/dog-2088424_1920.jpg',
-          titulo: 'Cão'
-        },
-        {
-          url: 'https://boasnovasmg.com.br/wp-content/uploads/2018/08/dog-2088424_1920.jpg',
-          titulo: 'Cachorro'
-        }
-      ]
+      fotos: []
     }
+  },
+
+  created(){
+   this.$http.get('http://localhost:3000/v1/fotos')
+      .then(res => res.json())
+      .then(fotos => this.fotos = fotos, err => console.log(err));
   }
 }
 </script>
 
 <style>
+.corpo {
+  font-family: Helvetica, sans-serif;
+  width: 96%;
+  margin: 0 auto;
+}
+
+.lista-fotos .lista-fotos-item {
+  display: inline-block
+}
+
+.lista-fotos-item {
+  list-style: none;
+}
+
+.centralizado {
+  text-align: center;
+}
 </style>
