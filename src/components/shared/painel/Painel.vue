@@ -1,8 +1,7 @@
 <template>
     <div class="painel">
         <h2 class="painel-titulo">{{ titulo }}</h2>
-        <div class="painel-conteudo">
-        </div>
+        <slot class="painel-conteudo"><!-- conteúdo do painel --> </slot>
     </div><!-- fim painel -->
 </template>
 
@@ -12,9 +11,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   /* estilo do painel */ 
-
    .painel {
     padding: 0 auto;
     border: solid 2px grey;
@@ -35,4 +33,6 @@ export default {
     padding: 10px;
     text-transform: uppercase;
   }
+
+
 </style>
