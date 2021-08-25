@@ -3,7 +3,7 @@
 
     <h1 class="titulo">{{ titulo }}</h1>
 
-    <input type="search" class="filtro" v-on:input="filtro = $event.target.value" placeholder="Filtre por parte do título"/>
+    <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="Filtre por parte do título"/>
 
     <ul class="lista-fotos">
       <li class="lista-fotos-item" v-for="foto in fotosComFiltro">
