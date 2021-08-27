@@ -11,7 +11,14 @@
       <meu-painel :titulo="foto.titulo">
         <imagem-responsiva :src="foto.url" :alt="foto.titulo" />
 
-        <meu-botao tipo="button" rotulo="Remover" @click.native="remove(foto)"/>
+        <meu-botao 
+          tipo="button" 
+          rotulo="Remover" 
+          @botaoAtivado="remove(foto)"
+          :confirmacao="false" 
+          estilo="perigo"
+        />
+
       </meu-painel>
 
       </li>
@@ -49,9 +56,7 @@ export default {
   },
   methods: {
     remove(foto){
-      if(confirm('Confirma operação?')){
-        alert(`Remover ${foto.titulo}`)
-      }
+      alert(`Remover ${foto.titulo}`)
     }
   },
   created(){
