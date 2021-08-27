@@ -10,6 +10,8 @@
 
       <meu-painel :titulo="foto.titulo">
         <imagem-responsiva :src="foto.url" :alt="foto.titulo" />
+
+        <meu-botao tipo="button" rotulo="Remover" @click.native="remove(foto)"/>
       </meu-painel>
 
       </li>
@@ -20,10 +22,13 @@
 <script>
 import Painel from '../shared/painel/Painel.vue';
 import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue';
+import Botao from '../shared/botao/Botao';
+
 export default {
   components: {
     'meu-painel': Painel,
-    'imagem-responsiva': ImagemResponsiva
+    'imagem-responsiva': ImagemResponsiva,
+    'meu-botao': Botao
   },
   data(){
     return {
@@ -39,6 +44,13 @@ export default {
         return this.fotos.filter(foto => exp.test(foto.titulo));
       }else{
         return this.fotos;
+      }
+    }
+  },
+  methods: {
+    remove(foto){
+      if(confirm('Confirma operação?')){
+        alert(`Remover ${foto.titulo}`)
       }
     }
   },
