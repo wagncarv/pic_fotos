@@ -9,7 +9,7 @@
       <li class="lista-fotos-item" v-for="foto in fotosComFiltro">
 
       <meu-painel :titulo="foto.titulo">
-        <imagem-responsiva :src="foto.url" :alt="foto.titulo" />
+        <img class="imagem-responsiva" :src="foto.url" :alt="foto.titulo">
       </meu-painel>
 
       </li>
@@ -19,11 +19,9 @@
 
 <script>
 import Painel from './components/shared/painel/Painel.vue';
-import ImagemResponsiva from './components/shared/imagem-responsiva/ImagemResponsiva.vue';
 export default {
   components: {
-    'meu-painel': Painel,
-    'imagem-responsiva': ImagemResponsiva
+    'meu-painel': Painel
   },
   data(){
     return {
@@ -67,6 +65,10 @@ export default {
 
   .lista-fotos .lista-fotos-item {
     display: inline-block;
+  }
+
+  .imagem-responsiva {
+    width: 100%;
   }
 
   .filtro {
