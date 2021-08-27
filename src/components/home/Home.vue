@@ -6,10 +6,10 @@
     <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="Filtre por parte do título"/>
 
     <ul class="lista-fotos">
-      <li class="lista-fotos-item" v-for="foto in fotosComFiltro">
+      <li class="lista-fotos-item" v-for="foto in fotosComFiltro" >
 
-      <meu-painel :titulo="foto.titulo">
-        <imagem-responsiva :src="foto.url" :alt="foto.titulo" />
+      <meu-painel :titulo="foto.titulo" >
+        <imagem-responsiva v-meu-transform :src="foto.url" :alt="foto.titulo" />
 
         <meu-botao 
           tipo="button" 
