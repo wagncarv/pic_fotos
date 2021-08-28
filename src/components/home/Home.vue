@@ -9,7 +9,7 @@
       <li class="lista-fotos-item" v-for="foto in fotosComFiltro" >
 
       <meu-painel :titulo="foto.titulo" >
-        <imagem-responsiva v-meu-transform="{ incremento: 50, animate: false }" :src="foto.url" :alt="foto.titulo" />
+        <imagem-responsiva v-meu-transform.animate="15" :src="foto.url" :alt="foto.titulo" />
 
         <meu-botao 
           tipo="button" 
