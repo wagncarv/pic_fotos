@@ -1,11 +1,12 @@
 <template>
     <img class="imagem-responsiva" :src="url" :alt="titulo">
 </template>
+
 <script>
 
 export default {
 
-    props: ['ulr', 'titulo']
+    props: ['url', 'titulo']
 }
 </script>
 
