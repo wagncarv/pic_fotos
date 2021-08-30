@@ -1,7 +1,9 @@
 <template>
   <div class="corpo">
 
-    <h1 class="titulo">{{ titulo }}</h1>
+    <h1 class="centralizado">{{ titulo }}</h1>
+
+    <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
 
     <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="Filtre por parte do título"/>
 
@@ -56,7 +58,17 @@ export default {
   },
   methods: {
     remove(foto){
-      alert(`Remover ${foto.titulo}`)
+      this.$http
+      .delete(`http://localhost:3000/v1/fotos/${foto._id}`)
+      .then(() => {
+        let index = this.fotos.indexOf(foto);
+        this.fotos.splice(index, 1);
+        this.message = 'Foto removida com sucesso';
+
+        }, err => {
+        console.log(err)
+        this.mensagem = 'Não foi possível remover a foto';
+      });
     }
   },
   created(){
@@ -69,6 +81,10 @@ export default {
 
 <style scoped>
  .titulo {
+    text-align: center;
+  }
+
+  .centralizado {
     text-align: center;
   }
 
