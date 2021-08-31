@@ -22,7 +22,7 @@
 
             <div class="centralizado">
                 <meu-botao rotulo="Gravar" tipo="submit" />
-                <router-link to="/">
+                <router-link :to="{ name: 'home' }">
                     <meu-botao rotulo="Voltar" tipo="button" />
                 </router-link>
             </div>
