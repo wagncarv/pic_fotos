@@ -69,17 +69,14 @@ export default {
         this.fotos.splice(index, 1);
         this.message = 'Foto removida com sucesso';
 
-        }, err => {
-        console.log(err)
-        this.mensagem = 'Não foi possível remover a foto';
-      });
+        }, err => this.mensagem = err.message);
     }
   },
   created(){
     this.service = new FotoService(this.$resource);
     this.service
       .lista()
-      .then(fotos => this.fotos = fotos, err => console.log(err));
+      .then(fotos => this.fotos = fotos, err => this.mensagem = err.message);
   }
 }
 </script>
