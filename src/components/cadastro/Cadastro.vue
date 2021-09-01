@@ -9,18 +9,20 @@
         <form @submit.prevent="grava()"> 
             <div class="controle">
                 <label for="titulo">Título</label>
-                <input id="titulo" autocomplete="off" v-model.lazy="foto.titulo"/>
+                <input v-validate data-vv-rules="required" name="titulo" id="titulo" autocomplete="off" v-model="foto.titulo"/>
+                <erro rotulo="Título obrigatório" v-show="errors.has('titulo')" />
             </div>
 
             <div class="controle">
                 <label for="url">URL</label>
-                <input id="url" autocomplete="off" v-model.lazy="foto.url" />
+                <input v-validate data-vv-rules="required" name="url" id="url" autocomplete="off" v-model="foto.url" />
+                <erro rotulo="URL obrigatória" v-show="errors.has('url')" />
                 <imagem-responsiva v-show="foto.url" :url="foto.url" :titulo="foto.titulo" />
             </div>
 
             <div class="controle">
                 <label for="descricao">Descrição</label>
-                <textarea autocomplete="off" id="descricao" v-model.lazy="foto.descricao"></textarea>
+                <textarea autocomplete="off" name="descricao" id="descricao" v-model.lazy="foto.descricao"></textarea>
             </div>
 
             <div class="centralizado">
@@ -38,6 +40,7 @@ import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue'
 import Botao from '../shared/botao/Botao.vue';
 import Foto from '../../domain/foto/Foto';
 import FotoService from '../../domain/foto/FotoService';
+import Erro from '../../components/erros/Erro.vue';
 
 export default {
     data(){
@@ -70,7 +73,8 @@ export default {
     },
     components: { 
       'imagem-responsiva': ImagemResponsiva,
-      'meu-botao': Botao
+      'meu-botao': Botao,
+      'erro': Erro
     },
 }
 </script>
@@ -87,6 +91,7 @@ export default {
 
     .controle label {
         display: block;
+         margin-top: 28px;
        font-weight: bold;
     }
 
