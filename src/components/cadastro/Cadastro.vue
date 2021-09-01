@@ -9,14 +9,14 @@
         <form @submit.prevent="grava()"> 
             <div class="controle">
                 <label for="titulo">Título</label>
-                <input v-validate data-vv-rules="required" name="titulo" id="titulo" autocomplete="off" v-model="foto.titulo"/>
-                <erro rotulo="Título obrigatório" v-show="errors.has('titulo')" />
+                <input data-vv-as="título" v-validate data-vv-rules="required|min:3|max:30" name="titulo" id="titulo" autocomplete="off" v-model="foto.titulo"/>
+                <erro :rotulo="errors.first('titulo')" v-show="errors.has('titulo')" />
             </div>
 
             <div class="controle">
                 <label for="url">URL</label>
                 <input v-validate data-vv-rules="required" name="url" id="url" autocomplete="off" v-model="foto.url" />
-                <erro rotulo="URL obrigatória" v-show="errors.has('url')" />
+                <erro :rotulo="errors.first('url')" v-show="errors.has('url')" />
                 <imagem-responsiva v-show="foto.url" :url="foto.url" :titulo="foto.titulo" />
             </div>
 
@@ -51,15 +51,22 @@ export default {
     },
     methods: {
         grava(){
-            this.service
-            .cadastra(this.foto)
-            .then(() => {
-                this.foto = new Foto();
-                if (this.id) {
-                    this.$router.push({ name: 'home' })
-                }
+            this.$validator 
+                .validateAll()
+                .then(success => {
+                    if(success){
+                        this.service
+                        .cadastra(this.foto)
+                        .then(() => {
+                        this.foto = new Foto();
+                        if (this.id) {
+                            this.$router.push({ name: 'home' })
+                    }
             }, 
             err => console.log(err));
+                    }
+                });
+           
         }
     },
     created() {

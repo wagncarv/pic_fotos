@@ -20,6 +20,7 @@
         border: 1px solid red;
         padding: 2px;
         background-color: #ED4337;
+        opacity: 0.7;
         font-family: Helvetica, sans-serif;
         color: white;
         text-align: center;
