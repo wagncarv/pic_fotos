@@ -1,30 +1,28 @@
 <template>
-  <div class="corpo">
-
+  <div>
     <h1 class="centralizado">{{ titulo }}</h1>
 
     <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
 
-    <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="Filtre por parte do título"/>
+    <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="filtre por parte do título">
 
     <ul class="lista-fotos">
-      <li class="lista-fotos-item" v-for="foto in fotosComFiltro" >
+      <li class="lista-fotos-item" v-for="foto of fotosComFiltro">
 
-      <meu-painel :titulo="foto.titulo" >
-        <imagem-responsiva v-meu-transform:scale.animate="1.2" :src="foto.url" :alt="foto.titulo" />
-        <router-link :to="{ name: 'altera', params: { id: foto._id } }">
-          <meu-botao tipo="button" rotulo="Alterar" />
-        </router-link>
-
-        <meu-botao 
-          tipo="button" 
-          rotulo="Remover" 
-          @botaoAtivado="remove(foto)"
-          :confirmacao="false" 
-          estilo="perigo"
-        />
-
-      </meu-painel>
+        <meu-painel :titulo="foto.titulo">
+          
+          <imagem-responsiva v-meu-transform:scale.animate="1.2" :url="foto.url" :titulo="foto.titulo"/>
+          <router-link :to="{ name : 'altera', params: { id: foto._id} }">
+            <meu-botao tipo="button" rotulo="ALTERAR"/>
+          </router-link>
+          <meu-botao 
+            tipo="button" 
+            rotulo="REMOVER" 
+            @botaoAtivado="remove(foto)"
+            :confirmacao="true"
+            estilo="perigo"/>
+          
+        </meu-painel>
 
       </li>
     </ul>
@@ -34,66 +32,74 @@
 <script>
 import Painel from '../shared/painel/Painel.vue';
 import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue';
-import Botao from '../shared/botao/Botao';
-import FotoService from '../../domain/foto//FotoService';
+import Botao from '../shared/botao/Botao.vue';
+import FotoService from '../../domain/foto/FotoService';
 
 export default {
+
   components: {
-    'meu-painel': Painel,
+    'meu-painel' : Painel, 
     'imagem-responsiva': ImagemResponsiva,
-    'meu-botao': Botao
+    'meu-botao' : Botao
   },
-  data(){
+
+  data() {
+
     return {
-      titulo: 'Alurapic',
-      fotos: [],
+
+      titulo: 'Alurapic', 
+      fotos: [], 
       filtro: '',
       mensagem: ''
     }
   },
+
   computed: {
-    fotosComFiltro(){
-      if(this.filtro){
+
+    fotosComFiltro() {
+
+      if(this.filtro) {
         let exp = new RegExp(this.filtro.trim(), 'i');
         return this.fotos.filter(foto => exp.test(foto.titulo));
-      }else{
+      } else {
         return this.fotos;
       }
     }
   },
-  methods: {
-    remove(foto){
-      this.service.apaga(foto._id)
-      .then(() => {
-        let index = this.fotos.indexOf(foto);
-        this.fotos.splice(index, 1);
-        this.message = 'Foto removida com sucesso';
 
-        }, err => this.mensagem = err.message);
+  methods: {
+
+    remove(foto) { 
+       
+      this.service.apaga(foto._id)
+        .then(()=> {
+          let indice = this.fotos.indexOf(foto);
+          this.fotos.splice(indice, 1);
+          this.mensagem = 'Foto removida com sucesso';
+        }, err => {
+          this.mensagem = err.message;
+        });
     }
+
   },
-  created(){
+
+  created() {
+
     this.service = new FotoService(this.$resource);
+
     this.service
       .lista()
       .then(fotos => this.fotos = fotos, err => this.mensagem = err.message);
   }
 }
+
 </script>
 
-<style scoped>
- .titulo {
-    text-align: center;
-  }
+<style>
 
   .centralizado {
-    text-align: center;
-  }
 
-  .corpo {
-    font-family: Helvetica, sans-serif;
-    margin: 0 auto;
-    width: 96%;
+    text-align: center;
   }
 
   .lista-fotos {
@@ -101,14 +107,13 @@ export default {
   }
 
   .lista-fotos .lista-fotos-item {
+
     display: inline-block;
   }
 
   .filtro {
+
     display: block;
     width: 100%;
-    border-radius: 2px;
-    border: 2px solid #8257e5;
-    box-shadow: 1px 1px #8257e5;
   }
 </style>
